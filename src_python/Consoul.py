@@ -73,8 +73,8 @@ class Consoul:
             line+=self.linestyle
         self.output(line)
     def list_menu_actions(self,menu):
-        for x in range(len(menu.actions)):
-            self.output("["+str(x)+"] "+menu.actions[x].name)
+        for x in range(len(menu.consoul.actions)):
+            self.output("["+str(x)+"] "+menu.consoul.actions[x].name)
         if menu.show_quit: self.output("[q] Quit")
     
     def output_choices(self,lists):
@@ -112,15 +112,15 @@ class Consoul:
                 entry = self.handle_entry(input("Enter an action by number: "),menu)
                 self.shortline()
                 if menu.quit: break                
-                if entry>=0 and entry<len(menu.actions):
+                if entry>=0 and entry<len(menu.consoul.actions):
                     break #Valid entry
                 else:
                     self.output("Please enter a valid action number")
                     self.shortline()
                     continue
             if menu.quit: break
-            menu.action_calls.append(menu.actions[entry].id)
-            menu.actions[entry].action()
+            menu.action_calls.append(menu.consoul.actions[entry].id)
+            menu.consoul.actions[entry].action()
             self.shortline()
         menu.quit = False
         if menu.level == 0 or self.close:
@@ -135,7 +135,7 @@ class Consoul:
 
 # Features
 #   -Initialization of menu attributes and methods
-#   -List of actions that the user can choose, including submenus
+#   -List of consoul.actions that the user can choose, including submenus
 #   -Colored output
 #   -Navigation memory
 #   -Menu data storage, permanent, session, and temporary
@@ -153,7 +153,7 @@ class Consoul_Menu:
             self.name = "Default Menu"
             self.show_quit = True
             self.quit = False
-            self.actions = []
+            self.consoul.actions = []
             self.actions_by_id = dict()
             self.action_calls = []
             if not parent:
@@ -164,7 +164,7 @@ class Consoul_Menu:
             Consoul_Menu.instances += 1
 
     def add_action(self,action):
-        self.actions.append(action)
+        self.consoul.actions.append(action)
         self.actions_by_id[action.id] = action
         action.consoul = self.consoul
         action.menu = self
@@ -177,14 +177,14 @@ class Consoul_Menu:
 
 #-----------------------------------------------------------------------------------------------
 # Consoul_Action
-# Action class to be listed in menus.
+# consoul.actions.Action class to be listed in menus.
 #
 # Written by: Eric Dudley
 
 # Features
-#   -Action instances so that classes can be used in multiple menus without sharing data memory
+#   -consoul.actions.Action instances so that classes can be used in multiple menus without sharing data memory
 #   -Actions can also be designed to share menu memory  
-#   -Extremely flexible actions
+#   -Extremely flexible consoul.actions
 #   -Open consoul instance or enter consoul menu from within an action
 #   -Colored output
 #   -Navigation memory
@@ -197,7 +197,7 @@ class Consoul_Menu:
 class Consoul_Action:
     instances = 0
 
-    def __init__(self,id,cls,name="Default Action"):
+    def __init__(self,id,cls,name="Default consoul.actions.Action"):
                 self.consoul = True
                 self.menu = True
                 self.id = id
@@ -210,7 +210,7 @@ class Consoul_Action:
         self.consoul.output("action() function not yet implemented for action id: "+str(self.id))
             
 #-----------------------------------------------------------------------------------------------
-#Default behavior and actions for when consoul module is run itself.
+#Default behavior and consoul.actions for when consoul module is run itself.
 #-----------------------------------------------------------------------------------------------
 import ftplib,os
 

@@ -1,3 +1,7 @@
+package consoul.views;
+
+import consoul.ViewManager;
+
 /**
 * Represents an abstract view to be renderer.
 *
@@ -11,13 +15,13 @@ public abstract class View
         public String title;
 
         /**
-        * Renders the content that the associated action provides.
-        */
+         * Renders the content that the associated action provides.
+         */
         public abstract void render();
 
         /**
-        * Used to calculate any absolute coordinate constants that
-        * may be needed to render.
-        */
+         * Used to calculate any absolute coordinate constants that
+         * may be needed to render.
+         */
         public abstract void calculateSpacing();
 }

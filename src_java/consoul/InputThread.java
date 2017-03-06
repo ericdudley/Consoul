@@ -1,3 +1,5 @@
+package consoul;
+
 /**
 * Continuously gets input from user and stores it
 * in application manager.
@@ -9,12 +11,12 @@
 public class InputThread extends Thread
 {
         private ApplicationManager am;
+
         /**
-        * Continuously prompts for input from Jcurses.
-        * Sends input to am.
-        */
-        public void run()
-        {
+         * Continuously prompts for input from Jcurses.
+         * Sends input to am.
+         */
+        public void run() {
 
         }
 }
