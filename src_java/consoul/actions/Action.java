@@ -1,5 +1,9 @@
+package consoul.actions;
+
+import consoul.ApplicationManager;
+
 /**
-* Abstract class for actions in Consoul.
+* Abstract class for consoul.actions in Consoul.
 *
 * @author Eric Dudley
 * @version 3/5/17
@@ -16,25 +20,25 @@ public abstract class Action
         /**
         * Preloads any required data before executing.
         */
-        public void preLoad();
+        public void preLoad(){}
 
         /**
         * Resets action to initial state.
         */
-        public void reset();
+        public abstract void reset();
 
         /**
         * Saves action's state to resource manager.
         */
-        public void save();
+        public void save(){}
 
         /**
         * Performs any close down routines.
         */
-        public void close();
+        public void close(){}
 
         /**
         * Handles globally recognized input handling.
         */
-        public void defaultInputHandler();
+        public void defaultInputHandler(){}
 }
