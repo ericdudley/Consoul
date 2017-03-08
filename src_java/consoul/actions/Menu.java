@@ -1,6 +1,11 @@
 package consoul.actions;
 
+import consoul.ApplicationManager;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Base menu class that links to consoul.actions.
@@ -12,6 +17,33 @@ public class Menu extends Action
 {
     private List<Action> options;
     private int current;
+
+    /**
+     * Initializes current to 0 and options list.
+     */
+    public Menu(ApplicationManager _am) {
+        am = _am;
+        current = 0;
+        options = new ArrayList<>();
+    }
+
+    /**
+     * Adds action to option list.
+     *
+     * @param action Action to add.
+     */
+    public void addOption(Action action) {
+        options.add(action);
+    }
+
+    /**
+     * Removes action from option list.
+     *
+     * @param action Action to remove.
+     */
+    public void removeOption(Action action) {
+        options.remove(action);
+    }
 
     /**
      * Getter
@@ -58,6 +90,15 @@ public class Menu extends Action
 
     @Override
     public void execute() {
+        while (true) {
+            am.notifyChanged();
+            nextOption();
+            try {
+                sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

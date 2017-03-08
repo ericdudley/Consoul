@@ -15,11 +15,18 @@ import java.util.Queue;
 */
 public class ApplicationManager
 {
-        private Action current_action;
+        private Action curr_action;
         private Queue<InputChar> inputQueue;
 
         public ViewManager vm;
         public ResourceManager rm;
+
+        /**
+         * Constructor. Creates vm.
+         */
+        public ApplicationManager() {
+                vm = new ViewManager(this);
+        }
 
         /**
          * Returns consoul.views.View object for current action.
@@ -33,9 +40,11 @@ public class ApplicationManager
         /**
          * Start the application.
          *
+         * @param action Entry point action.
          * @return Exit state of application 0 is good.
          */
-        public int start() {
+        public int start(Action action) {
+                routeTo(action);
                 return 0;
         }
 
@@ -79,15 +88,26 @@ public class ApplicationManager
          * Called when action's state has changed. Updates view.
          */
         public void notifyChanged() {
-
+                vm.update();
         }
 
         /**
-         * Changes current_action to target.
+         * Changes curr_action to target.
          *
          * @param target consoul.actions.Action to be routed to.
          */
         public void routeTo(Action target) {
+                curr_action = target;
+                curr_action.preLoad();
+                curr_action.execute();
+        }
 
+        /**
+         * Getter.
+         *
+         * @return Current action.
+         */
+        public Action getAction() {
+                return this.curr_action;
         }
 }

@@ -1,10 +1,13 @@
 package consoul;
 
+import consoul.views.MenuView;
 import jcurses.system.CharColor;
 import consoul.views.View;
 
 import java.awt.*;
 import java.util.Map;
+
+import static jcurses.system.Toolkit.printString;
 
 /**
 * Manages the view for Consoul.
@@ -17,8 +20,17 @@ public class ViewManager
         private Point viewport_BR;
 
         public ApplicationManager am;
-        public View current_view;
+        public View curr_view;
         public Boolean draw_border;
+        public int height;
+        public int width;
+
+        /**
+         * Initializes am.
+         */
+        public ViewManager(ApplicationManager _am) {
+                am = _am;
+        }
 
         /**
          * Draws anything before the view.
@@ -32,7 +44,10 @@ public class ViewManager
          * Called when the view should be redrawn.
          */
         public void update() {
-
+                preRender();
+                curr_view = new MenuView(this);
+                curr_view.calculateSpacing();
+                curr_view.render();
         }
 
         /**
@@ -44,7 +59,7 @@ public class ViewManager
          * @param y y coordinate
          */
         public void drawString(String str, int x, int y) {
-
+                printString(str, x, y, curr_color);
         }
 
         /**
@@ -74,6 +89,6 @@ public class ViewManager
          * @param key Color name in colors map.
          */
         public void color(String key) {
-
+                curr_color = new CharColor(CharColor.WHITE, CharColor.GREEN);
         }
 }

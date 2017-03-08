@@ -11,7 +11,7 @@ import consoul.ViewManager;
 
 public abstract class View
 {
-        private ViewManager vm;
+        protected ViewManager vm;
         public String title;
 
         /**
