@@ -1,11 +1,13 @@
 package consoul.actions;
 
 import consoul.ApplicationManager;
+import jcurses.system.InputChar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
+import static jcurses.system.InputChar.*;
 
 /**
  * Base menu class that links to consoul.actions.
@@ -18,13 +20,14 @@ public class Menu extends Action
     private List<Action> options;
     private int current;
 
-    /**
-     * Initializes current to 0 and options list.
-     */
-    public Menu(ApplicationManager _am) {
-        am = _am;
+    public Menu() {
+        super();
         current = 0;
         options = new ArrayList<>();
+        Filler back = new Filler();
+        back.setApplicationManager(this.am);
+        back.setName("Back");
+        options.add(back);
     }
 
     /**
@@ -33,7 +36,8 @@ public class Menu extends Action
      * @param action Action to add.
      */
     public void addOption(Action action) {
-        options.add(action);
+        if (options.size() >= 1)
+            options.add(options.size() - 1, action);
     }
 
     /**
@@ -42,7 +46,8 @@ public class Menu extends Action
      * @param action Action to remove.
      */
     public void removeOption(Action action) {
-        options.remove(action);
+        if (options.size() >= 2)
+            options.remove(options.size() - 2);
     }
 
     /**
@@ -90,13 +95,19 @@ public class Menu extends Action
 
     @Override
     public void execute() {
-        while (true) {
+        for (; ; ) {
             am.notifyChanged();
-            nextOption();
-            try {
-                sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            int code = am.getInputCode();
+            if (code == KEY_UP)
+                prevOption();
+            else if (code == KEY_DOWN)
+                nextOption();
+            else if (code == 10) {
+                if (current == options.size() - 1) {
+                    return;
+                } else {
+                    choose(current);
+                }
             }
         }
 

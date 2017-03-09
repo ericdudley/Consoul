@@ -1,9 +1,9 @@
 package consoul.actions;
 
-import consoul.actions.Action;
-
-public class Gallery extends Action {
-
+/**
+ * Created by eric on 3/8/17.
+ */
+public class Filler extends Action {
     @Override
     public void execute() {
 

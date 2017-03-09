@@ -12,6 +12,24 @@ public abstract class Action
 {
         protected ApplicationManager am;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    protected String name;
+
+    public Action() {
+        name = "Default Action";
+    }
+
+    public Action(ApplicationManager _am) {
+        am = _am;
+    }
+
         /**
         * Main execution method for action.
         */
@@ -37,8 +55,15 @@ public abstract class Action
         */
         public void close(){}
 
+    public void setApplicationManager(ApplicationManager _am) {
+        am = _am;
+    }
+
         /**
-        * Handles globally recognized input handling.
-        */
-        public void defaultInputHandler(){}
+         * Name
+         */
+        @Override
+        public String toString() {
+            return name;
+        }
 }

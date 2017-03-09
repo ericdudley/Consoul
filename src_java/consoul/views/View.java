@@ -14,6 +14,13 @@ public abstract class View
         protected ViewManager vm;
         public String title;
 
+    public View() {
+
+    }
+
+    public View(ViewManager _vm) {
+        vm = _vm;
+    }
         /**
          * Renders the content that the associated action provides.
          */
@@ -24,4 +31,9 @@ public abstract class View
          * may be needed to render.
          */
         public abstract void calculateSpacing();
+
+    public void setViewManager(ViewManager _vm) {
+        vm = _vm;
+    }
 }
+

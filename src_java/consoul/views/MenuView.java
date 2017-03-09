@@ -18,10 +18,6 @@ public class MenuView extends View {
     private int numOptions;
     private Menu menu;
 
-    public MenuView(ViewManager _vm) {
-        vm = _vm;
-    }
-
     @Override
     public void render() {
         int y = topMargin + 1;

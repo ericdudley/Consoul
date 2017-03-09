@@ -7,5 +7,9 @@ package consoul;
  * @version 3/6/17
  */
 public class ResourceManager {
+    private ApplicationManager am;
 
+    public ResourceManager(ApplicationManager _am) {
+        this.am = _am;
+    }
 }
