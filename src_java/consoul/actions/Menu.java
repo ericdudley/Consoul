@@ -17,17 +17,11 @@ import static jcurses.system.InputChar.*;
  */
 public class Menu extends Action
 {
-    private List<Action> options;
-    private int current;
+    private ListWidget<Action> list;
 
     public Menu() {
-        super();
-        current = 0;
-        options = new ArrayList<>();
-        Filler back = new Filler();
-        back.setApplicationManager(this.am);
-        back.setName("Back");
-        options.add(back);
+        list = new ListWidget<>();
+        list.addSpecial("Back");
     }
 
     /**
@@ -36,8 +30,7 @@ public class Menu extends Action
      * @param action Action to add.
      */
     public void addOption(Action action) {
-        if (options.size() >= 1)
-            options.add(options.size() - 1, action);
+        list.addItem(action);
     }
 
     /**
@@ -46,17 +39,16 @@ public class Menu extends Action
      * @param action Action to remove.
      */
     public void removeOption(Action action) {
-        if (options.size() >= 2)
-            options.remove(options.size() - 2);
+        list.removeItem(action);
     }
 
     /**
      * Getter
      * @return List of actions in menu.
      */
-    public List<Action> getOptions()
+    public List<String> getOptions()
     {
-        return this.options;
+        return list.toStrings();
     }
 
     /**
@@ -65,7 +57,7 @@ public class Menu extends Action
      */
     public int getCurrent()
     {
-        return this.current;
+        return list.getCurrent();
     }
 
     /**
@@ -73,7 +65,7 @@ public class Menu extends Action
      */
     public void prevOption()
     {
-        current = current == 0 ? this.options.size()-1 : current-1;
+        list.prev();
     }
 
     /**
@@ -81,7 +73,7 @@ public class Menu extends Action
      */
     public void nextOption()
     {
-        current = current == this.options.size()-1 ? 0 : current+1;
+        list.next();
     }
 
     /**
@@ -90,7 +82,10 @@ public class Menu extends Action
      */
     public void choose(int index)
     {
-        this.am.routeTo(this.options.get(index));
+        if (!list.isSpecial(index))
+            this.am.routeTo(list.getList().get(index));
+        else if (list.getSpecial(index).equals("Back"))
+            return;
     }
 
     @Override
@@ -103,14 +98,11 @@ public class Menu extends Action
             else if (code == KEY_DOWN)
                 nextOption();
             else if (code == 10) {
-                if (current == options.size() - 1) {
+                choose(getCurrent());
+                if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back"))
                     return;
-                } else {
-                    choose(current);
-                }
             }
         }
-
     }
 
     @Override

@@ -6,7 +6,8 @@ package consoul.views;
 import consoul.actions.Form;
 import consoul.views.View;
 
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public class FormView extends View {
 
@@ -27,15 +28,13 @@ public class FormView extends View {
         }
         int y = fieldsPos.y;
         int current = form.getCurrent();
-        for (int i = 0; i < form.numFields(); i++) {
+        List<String> strs = form.getStrings();
+        for (int i = 0; i < strs.size(); i++) {
             vm.color("menu_text");
             if (i == current)
                 vm.color("highlighted_text");
-            vm.drawString(form.getFields().get(i) + ": " + form.getValues().get(i), fieldsPos.x, y);
-            y += 1;
-            vm.color("error_text");
-            vm.drawString(form.getErrors().get(i), fieldsPos.x, y);
-            y += fieldSpacing - 1;
+            vm.drawString(strs.get(i), fieldsPos.x, y);
+            y += fieldSpacing;
         }
     }
 

@@ -11,71 +11,54 @@ import static jcurses.system.InputChar.KEY_DOWN;
 import static jcurses.system.InputChar.KEY_UP;
 
 public class Form extends Action {
-    public List<String> getFields() {
-        return fields;
-    }
-
-    public List<String> getValues() {
-        return values;
-    }
-
-    public List<String> getErrors() {
-        return errors;
+    public List<String> getStrings() {
+        return list.toStrings();
     }
 
     public int getCurrent() {
-        return current;
+        return list.getCurrent();
     }
 
-    protected List<String> fields;
-    private List<String> values;
-    private List<String> errors;
-    private int current;
+    private ListWidget<FormField> list;
 
     public Form() {
-        fields = new LinkedList<>();
-        values = new LinkedList<>();
-        errors = new LinkedList<>();
-        fields.add("<Save>");
-        values.add("");
-        errors.add("");
-        fields.add("<Back>");
-        values.add("");
-        errors.add("");
-        current = 0;
+        list = new ListWidget<FormField>() {
+            @Override
+            public List<String> toStrings() {
+                List<String> strs = new ArrayList<>();
+                for (FormField f : getList()) {
+                    strs.add(f.getName() + ": " + f.getValue() + " | " + f.getError());
+                }
+                for (String s : getSpecials()) {
+                    strs.add(s);
+                }
+                return strs;
+            }
+        };
+        list.addSpecial("Save");
+        list.addSpecial("Back");
     }
 
     public int numFields() {
-        return fields.size();
+        return list.size();
     }
 
     public void addField(String name) {
-        fields.add(numFields() - 2, name);
-        values.add(numFields() - 2, "");
-        errors.add(numFields() - 2, "");
+        list.addItem(new FormField(name));
     }
 
-    private void addToField(int field, char ch) {
-        values.set(field, values.get(field) + ch);
+    private void addToField(int index, char ch) {
+        if (list.isSpecial(index))
+            return;
+        FormField field = list.getList().get(index);
+        field.setValue(field.getValue() + ch);
     }
 
-    private void removeFromField(int field) {
-        String str = values.get(field);
-        values.set(field, str.substring(0, str.length() - 1));
-    }
-
-    /**
-     * Move to previous field, wrap if necessary.
-     */
-    public void prev() {
-        current = current == 0 ? this.fields.size() - 1 : current - 1;
-    }
-
-    /**
-     * Move to next field, wrap if necessary.
-     */
-    public void next() {
-        current = current == this.fields.size() - 1 ? 0 : current + 1;
+    private void removeFromField(int index) {
+        if (list.isSpecial(index))
+            return;
+        FormField field = list.getList().get(index);
+        field.setValue(field.getValue().substring(0, field.getValue().length() - 1));
     }
 
     @Override
@@ -83,23 +66,20 @@ public class Form extends Action {
         for (; ; ) {
             am.notifyChanged();
             InputChar code = am.getInput();
-            values.set(numFields() - 2, "");
             if (code.getCode() == KEY_UP)
-                prev();
+                list.prev();
             else if (code.getCode() == KEY_DOWN)
-                next();
+                list.next();
             else if (code.getCode() == KEY_BACKSPACE)
-                removeFromField(current);
+                removeFromField(getCurrent());
             else if (code.getCode() == 10) {
-                if (current == numFields() - 1) {
+                if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back")) {
                     return;
-                } else if (current == numFields() - 2) {
+                } else if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Save")) {
                     save();
-                    values.set(current, "Saved!");
                 }
-
-            } else if (!code.isSpecialCode() && current < numFields() - 2) {
-                addToField(current, code.getCharacter());
+            } else if (!code.isSpecialCode()) {
+                addToField(getCurrent(), code.getCharacter());
             }
         }
     }
@@ -107,5 +87,45 @@ public class Form extends Action {
     @Override
     public void reset() {
 
+    }
+
+    private class FormField {
+        private String name;
+        private String value;
+        private String error;
+
+        public FormField() {
+            value = "";
+            error = "";
+        }
+
+        public FormField(String name) {
+            this();
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getError() {
+            return error;
+        }
+
+        public void setError(String error) {
+            this.error = error;
+        }
     }
 }
