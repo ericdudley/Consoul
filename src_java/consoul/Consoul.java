@@ -2,6 +2,8 @@ package consoul;
 
 import consoul.actions.Action;
 
+import static java.lang.Thread.sleep;
+
 /**
  * Base class for a Consoul application.
  * Created by eric on 3/9/17.

@@ -17,10 +17,12 @@ import static jcurses.system.Toolkit.readCharacter;
 public class InputThread extends Thread
 {
         private ApplicationManager am;
+    private Object input_sync;
 
 
-    public InputThread(ApplicationManager _am) {
+    public InputThread(ApplicationManager _am, Object _input_sync) {
         this.am = _am;
+        this.input_sync = _input_sync;
     }
 
         /**
@@ -32,6 +34,11 @@ public class InputThread extends Thread
                 InputChar inchar = readCharacter();
                 printString(Integer.toString(inchar.getCode()), 0, 0, new CharColor(CharColor.WHITE, CharColor.BLUE));
                 am.addInput(inchar);
+                synchronized (input_sync) {
+                    input_sync.notify();
+                }
             }
+            am.vm.color("error_text");
+            am.vm.drawString("Press any key to exit...", 0, 0);
         }
 }

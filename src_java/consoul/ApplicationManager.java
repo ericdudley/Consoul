@@ -1,17 +1,14 @@
 package consoul;
 
 import consoul.actions.Action;
-import consoul.views.View;
 import jcurses.system.InputChar;
-import jdk.internal.util.xml.impl.Input;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.lang.Thread.sleep;
-import static jcurses.system.Toolkit.clearScreen;
-import static jcurses.system.Toolkit.shutdown;
 
 /**
 * Entry point for Consoul. Controls application state and
@@ -28,7 +25,8 @@ public class ApplicationManager
 
         private Action curr_action;
         public boolean alive;
-        private Queue<InputChar> inputQueue;
+    private Queue<InputChar> input_queue;
+    private Object input_sync;
 
         public ViewManager vm;
         public ResourceManager rm;
@@ -40,8 +38,9 @@ public class ApplicationManager
         public ApplicationManager() {
                 vm = new ViewManager(this);
                 rm = new ResourceManager(this);
-                it = new InputThread(this);
-                inputQueue = new LinkedList<>();
+            input_sync = new Object();
+            it = new InputThread(this, input_sync);
+            input_queue = new LinkedList<>();
                 alive = true;
         }
 
@@ -84,7 +83,7 @@ public class ApplicationManager
          * @param in
          */
         public void addInput(InputChar in) {
-                inputQueue.add(in);
+            input_queue.add(in);
         }
 
         /**
@@ -96,13 +95,13 @@ public class ApplicationManager
                 }
         }
         /**
-         * Returns input from the inputQueue without blocking.
+         * Returns input from the input_queue without blocking.
          *
          * @return Next input as an int.
          */
         public int getInputCodeNoBlock() {
-                if(inputQueue.size() > 0) {
-                        InputChar inc = inputQueue.remove();
+            if (input_queue.size() > 0) {
+                InputChar inc = input_queue.remove();
                         defaultInputHandler(inc);
                         return inc.getCode();
                 }
@@ -110,13 +109,13 @@ public class ApplicationManager
         }
 
         /**
-         * Returns input from the inputQueue without blocking.
+         * Returns input from the input_queue without blocking.
          *
          * @return Next input as a char.
          */
         public char getInputCharNoBlock() {
-                if(inputQueue.size() > 0) {
-                        InputChar inc = inputQueue.remove();
+            if (input_queue.size() > 0) {
+                InputChar inc = input_queue.remove();
                         defaultInputHandler(inc);
                         return inc.getCharacter();
                 }
@@ -124,54 +123,61 @@ public class ApplicationManager
         }
 
         /**
-         * Returns input from the inputQueue with blocking.
+         * Returns input from the input_queue with blocking.
          *
          * @return Next input as an int .
          */
         public int getInputCode() {
-                while (inputQueue.size() <= 0) {
-                        try {
-                                sleep(POLLING_DELAY);
-                        } catch (InterruptedException e) {
-                                e.printStackTrace();
-                        }
-                }
-                InputChar inc = inputQueue.remove();
+            blockForInput();
+            InputChar inc = input_queue.remove();
                 defaultInputHandler(inc);
                 return inc.getCode();
         }
 
         /**
-         * Returns input from the inputQueue with blocking.
+         * Returns input from the input_queue with blocking.
          *
          * @return Next input as a char.
          */
         public char getInputChar() {
-                while(inputQueue.size() <= 0) {
-                        try {
-                                sleep(POLLING_DELAY);
-                        } catch (InterruptedException e) {
-                                e.printStackTrace();
-                        }
-                }
-                InputChar inc = inputQueue.remove();
+            blockForInput();
+            InputChar inc = input_queue.remove();
                 defaultInputHandler(inc);
                 return inc.getCharacter();
         }
 
         public InputChar getInput() {
-                while (inputQueue.size() <= 0) {
-                        try {
-                                sleep(POLLING_DELAY);
-                        } catch (InterruptedException e) {
-                                e.printStackTrace();
-                        }
-                }
-                InputChar inc = inputQueue.remove();
-                defaultInputHandler(inc);
-                return inc;
+            blockForInput();
+            InputChar inc = input_queue.remove();
+            defaultInputHandler(inc);
+            return inc;
         }
 
+    /**
+     * Returns input from the input_queue without blocking.
+     *
+     * @return Next input as a InputChar.
+     */
+    public InputChar getInputNoBlock() {
+        if (input_queue.size() > 0) {
+            InputChar inc = input_queue.remove();
+            defaultInputHandler(inc);
+            return inc;
+        }
+        return null;
+    }
+
+    private void blockForInput() {
+        synchronized (input_sync) {
+            while (input_queue.size() <= 0) {
+                try {
+                    input_sync.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                        }
+                }
+        }
         /**
          * Called when action's state has changed. Updates view.
          */

@@ -61,22 +61,6 @@ public class Menu extends Action
     }
 
     /**
-     * Move to previous menu option, wrap if necessary.
-     */
-    public void prevOption()
-    {
-        list.prev();
-    }
-
-    /**
-     * Move to next menu option, wrap if necessary.
-     */
-    public void nextOption()
-    {
-        list.next();
-    }
-
-    /**
      * Route to the current menu option.
      * @param index Index of chosen action.
      */
@@ -94,9 +78,9 @@ public class Menu extends Action
             am.notifyChanged();
             int code = am.getInputCode();
             if (code == KEY_UP)
-                prevOption();
+                list.prev();
             else if (code == KEY_DOWN)
-                nextOption();
+                list.next();
             else if (code == 10) {
                 choose(getCurrent());
                 if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back"))
