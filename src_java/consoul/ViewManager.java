@@ -38,6 +38,11 @@ public class ViewManager
                 am = _am;
                 colors = new HashMap<>();
                 view_map = new HashMap<>();
+
+                addColor("menu_text", CharColor.BLACK, CharColor.WHITE);
+                addColor("highlighted_text", CharColor.WHITE, CharColor.BLACK);
+                addColor("bg", CharColor.BLACK, CharColor.BLACK);
+                addColor("error_text", CharColor.RED, CharColor.BLACK);
         }
 
         /**

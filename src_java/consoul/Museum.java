@@ -15,10 +15,6 @@ public class Museum extends Consoul {
 
     @Override
     public Action init(ApplicationManager am) {
-        am.vm.addColor("menu_text", CharColor.BLACK, CharColor.WHITE);
-        am.vm.addColor("highlighted_text", CharColor.WHITE, CharColor.BLACK);
-        am.vm.addColor("bg", CharColor.BLACK, CharColor.BLACK);
-        am.vm.addColor("error_text", CharColor.RED, CharColor.BLACK);
         Menu menu = (Menu) am.addAction("consoul.actions.Menu", "consoul.views.MenuView");
         menu.setName("Main Menu");
         for (int i = 0; i < 3; i++) {
