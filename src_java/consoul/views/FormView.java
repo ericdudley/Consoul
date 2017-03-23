@@ -4,6 +4,7 @@ package consoul.views;
  */
 
 import consoul.actions.Form;
+import consoul.actions.FormField;
 import consoul.views.View;
 
 import java.awt.Point;
@@ -28,12 +29,22 @@ public class FormView extends View {
         }
         int y = fieldsPos.y;
         int current = form.getCurrent();
-        List<String> strs = form.getStrings();
-        for (int i = 0; i < strs.size(); i++) {
+        List<FormField> fields = form.getFields();
+        for (int i = 0; i < fields.size(); i++) {
             vm.color("menu_text");
             if (i == current)
                 vm.color("highlighted_text");
-            vm.drawString(strs.get(i), fieldsPos.x, y);
+            vm.drawString(fields.get(i).getName() + ": " + fields.get(i).getValue(), fieldsPos.x, y);
+            vm.color("error_text");
+            vm.drawString(fields.get(i).getError(), fieldsPos.x, y + 1);
+            y += fieldSpacing;
+        }
+        List<String> specials = form.getSpecials();
+        for (int i = 0; i < specials.size(); i++) {
+            vm.color("menu_text");
+            if (i + fields.size() == current)
+                vm.color("highlighted_text");
+            vm.drawString(specials.get(i), fieldsPos.x, y);
             y += fieldSpacing;
         }
     }
@@ -43,6 +54,6 @@ public class FormView extends View {
         form = (Form) vm.am.getAction();
         fieldsPos.x = 3;
         fieldsPos.y = 2;
-        fieldSpacing = vm.height / form.numFields() >= 3 ? 3 : 2;
+        fieldSpacing = vm.height / form.numFields() >= 3 ? 4 : 3;
     }
 }

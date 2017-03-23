@@ -1,8 +1,6 @@
 package consoul;
 
-import consoul.actions.Action;
-import consoul.actions.Form;
-import consoul.actions.Menu;
+import consoul.actions.*;
 import jcurses.system.CharColor;
 
 /**
@@ -24,8 +22,10 @@ public class Museum extends Consoul {
         }
         Form form = (Form) am.addAction("consoul.actions.Form", "consoul.views.FormView");
         form.setName("Profile Form");
-        form.addField("Name");
-        form.addField("Age");
+        form.addField(new StringFormField("Name", 20));
+        form.addField(new IntFormField("Age"));
+        form.addField(new DateFormField("Date"));
+        form.addField(new TimeFormField("Time"));
         menu.addOption(form);
         return menu;
     }

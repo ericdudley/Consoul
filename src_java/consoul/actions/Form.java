@@ -4,6 +4,7 @@ import consoul.actions.Action;
 import jcurses.system.InputChar;
 import jdk.internal.util.xml.impl.Input;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static jcurses.system.InputChar.KEY_BACKSPACE;
@@ -11,10 +12,13 @@ import static jcurses.system.InputChar.KEY_DOWN;
 import static jcurses.system.InputChar.KEY_UP;
 
 public class Form extends Action {
-    public List<String> getStrings() {
-        return list.toStrings();
+    public List<FormField> getFields() {
+        return list.getList();
     }
 
+    public List<String> getSpecials() {
+        return list.getSpecials();
+    }
     public int getCurrent() {
         return list.getCurrent();
     }
@@ -47,6 +51,9 @@ public class Form extends Action {
         list.addItem(new FormField(name));
     }
 
+    public void addField(FormField f) {
+        list.addItem(f);
+    }
     private void addToField(int index, char ch) {
         if (list.isSpecial(index))
             return;
@@ -58,6 +65,8 @@ public class Form extends Action {
         if (list.isSpecial(index))
             return;
         FormField field = list.getList().get(index);
+        if (field.getValue().equals(""))
+            return;
         field.setValue(field.getValue().substring(0, field.getValue().length() - 1));
     }
 
@@ -76,7 +85,8 @@ public class Form extends Action {
                 if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back")) {
                     return;
                 } else if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Save")) {
-                    save();
+                    if (validate())
+                        save();
                 }
             } else if (!code.isSpecialCode()) {
                 addToField(getCurrent(), code.getCharacter());
@@ -89,43 +99,15 @@ public class Form extends Action {
 
     }
 
-    private class FormField {
-        private String name;
-        private String value;
-        private String error;
-
-        public FormField() {
-            value = "";
-            error = "";
+    public boolean validate() {
+        boolean valid = true;
+        for (FormField f : list.getList()) {
+            if (!f.validate()) {
+                f.setError("Invalid!");
+                valid = false;
+            } else
+                f.setError("");
         }
-
-        public FormField(String name) {
-            this();
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        public String getError() {
-            return error;
-        }
-
-        public void setError(String error) {
-            this.error = error;
-        }
+        return valid;
     }
 }
