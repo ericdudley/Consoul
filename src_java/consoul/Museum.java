@@ -27,6 +27,13 @@ public class Museum extends Consoul {
         form.addField(new DateFormField("Date"));
         form.addField(new TimeFormField("Time"));
         menu.addOption(form);
+
+        Gallery gallery = (Gallery) am.addAction("consoul.actions.Gallery", "consoul.views.GalleryView");
+        gallery.setName("Gallery");
+        gallery.addImage(new Image("aaabbbcccdddeee", 3));
+        gallery.addImage(new Image("aaaaabbbbbccccc", 5));
+        gallery.addImage((new Image("1111222233334444", 4)));
+        menu.addOption(gallery);
         return menu;
     }
 

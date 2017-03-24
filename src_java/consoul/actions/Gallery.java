@@ -17,10 +17,17 @@ public class Gallery extends Action {
         show_info = false;
     }
 
+    public void addImage(Image img) {
+        list.addItem(img);
+    }
+
     public List<Image> getImages() {
         return list.getList();
     }
 
+    public int getCurrent() {
+        return list.getCurrent();
+    }
     @Override
     public void preLoad() {
         //Populate list with images

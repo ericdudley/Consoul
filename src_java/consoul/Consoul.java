@@ -10,7 +10,7 @@ import static java.lang.Thread.sleep;
  */
 public abstract class Consoul {
 
-    private ApplicationManager am;
+    private final ApplicationManager am;
 
     public Consoul() {
         am = new ApplicationManager();

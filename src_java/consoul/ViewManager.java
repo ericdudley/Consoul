@@ -1,11 +1,13 @@
 package consoul;
 
 import consoul.actions.Action;
+import consoul.actions.Image;
 import consoul.views.MenuView;
 import jcurses.system.CharColor;
 import consoul.views.View;
+import jcurses.system.Toolkit;
 
-import java.awt.*;
+import java.awt.Point;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +40,9 @@ public class ViewManager
                 am = _am;
                 colors = new HashMap<>();
                 view_map = new HashMap<>();
+
+                width = Toolkit.getScreenWidth();
+                height = Toolkit.getScreenHeight();
 
                 addColor("menu_text", CharColor.BLACK, CharColor.WHITE);
                 addColor("highlighted_text", CharColor.WHITE, CharColor.BLACK);
@@ -125,7 +130,18 @@ public class ViewManager
          * @param point Point of first char.
          */
         public void drawString(String str, Point point) {
+                drawString(str, point.x, point.y);
+        }
 
+        public void drawImage(Image img, int x, int y) {
+                for (String str : img.toRows()) {
+                        drawString(str, x, y);
+                        y++;
+                }
+        }
+
+        public void drawImage(Image img, Point point) {
+                drawImage(img, point.x, point.y);
         }
 
         /**
