@@ -34,6 +34,10 @@ public class Gallery extends Action {
         //Populate list with images
     }
 
+    public boolean showingInfo() {
+        return show_info;
+    }
+
     @Override
     public void execute() {
         for (; ; ) {

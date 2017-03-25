@@ -5,6 +5,7 @@ package consoul.actions.gallery;
  */
 public class Image {
     private final String value;
+    private String info;
     private int width;
     private int height;
 
@@ -14,6 +15,7 @@ public class Image {
 
     public Image(String value, int width) {
         this.value = value;
+        this.info = "Default Info";
         setWidth(width);
     }
 
@@ -44,9 +46,11 @@ public class Image {
         this.width = value.length() / height;
     }
 
-    public static void main(String[] args) {
-        Image img = new Image("aaaaabbbbbcccccddddd");
-        img.setWidth(4);
-        img.toRows();
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

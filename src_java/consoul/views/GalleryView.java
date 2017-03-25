@@ -1,6 +1,7 @@
 package consoul.views;
 
 import consoul.actions.Gallery;
+import consoul.actions.gallery.Image;
 
 import java.awt.Point;
 
@@ -21,7 +22,12 @@ public class GalleryView extends View {
         vm.color("menu_text");
         String str = (gallery.getCurrent() + 1) + " of " + gallery.getImages().size();
         vm.drawString(str, vm.width - 1 - str.length(), vm.height - 1);
-        vm.drawImage(gallery.getImages().get(gallery.getCurrent()), img_loc);
+        Image curr = gallery.getImages().get(gallery.getCurrent());
+        if (gallery.showingInfo()) {
+            vm.drawString(curr.getInfo(), (vm.width / 2) - curr.getInfo().length() / 2, vm.height / 2);
+        } else {
+            vm.drawImage(curr, img_loc);
+        }
         vm.drawString("left for previous", 0, vm.height - 4);
         vm.drawString("right for next", 0, vm.height - 3);
         vm.drawString("i to toggle info", 0, vm.height - 2);

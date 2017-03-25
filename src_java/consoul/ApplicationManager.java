@@ -63,6 +63,11 @@ public class ApplicationManager
                 return null;
         }
 
+    public void addAction(Action act, String vie) {
+        act.setApplicationManager(this);
+        vm.addActionView(act, vie);
+    }
+
         /**
          * Start the application.
          *
