@@ -1,7 +1,11 @@
 package consoul;
 
 import consoul.actions.*;
-import jcurses.system.CharColor;
+import consoul.actions.form.DateFormField;
+import consoul.actions.form.IntFormField;
+import consoul.actions.form.StringFormField;
+import consoul.actions.form.TimeFormField;
+import consoul.actions.gallery.Image;
 
 /**
  * Entry point test class.

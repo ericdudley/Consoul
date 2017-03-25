@@ -1,4 +1,4 @@
-package consoul.actions;
+package consoul.tools;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package consoul.actions;
+package consoul.actions.form;
 
 import static consoul.ResourceManager.dates;
 

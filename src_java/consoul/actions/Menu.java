@@ -1,9 +1,7 @@
 package consoul.actions;
 
-import consoul.ApplicationManager;
-import jcurses.system.InputChar;
+import consoul.tools.ListWidget;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.Thread.sleep;

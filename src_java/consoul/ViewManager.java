@@ -1,14 +1,12 @@
 package consoul;
 
 import consoul.actions.Action;
-import consoul.actions.Image;
-import consoul.views.MenuView;
+import consoul.actions.gallery.Image;
 import jcurses.system.CharColor;
 import consoul.views.View;
 import jcurses.system.Toolkit;
 
 import java.awt.Point;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,6 +103,8 @@ public class ViewManager
                 Action action = am.getAction();
                 if (curr_view == null || !curr_view.getClass().toString().equals(getView(action)))
                         changeView();
+                width = Toolkit.getScreenWidth();
+                height = Toolkit.getScreenHeight();
                 preRender();
                 curr_view.calculateSpacing();
                 curr_view.render();

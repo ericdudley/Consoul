@@ -4,8 +4,7 @@ package consoul.views;
  */
 
 import consoul.actions.Form;
-import consoul.actions.FormField;
-import consoul.views.View;
+import consoul.actions.form.FormField;
 
 import java.awt.Point;
 import java.util.List;

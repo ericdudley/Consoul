@@ -1,4 +1,4 @@
-package consoul.actions;
+package consoul.actions.gallery;
 
 /**
  * Created by eric on 3/9/17.

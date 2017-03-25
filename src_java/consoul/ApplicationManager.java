@@ -1,10 +1,9 @@
 package consoul;
 
 import consoul.actions.Action;
+import consoul.tools.InputThread;
 import jcurses.system.InputChar;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.Queue;
 

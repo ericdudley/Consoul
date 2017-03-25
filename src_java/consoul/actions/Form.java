@@ -1,10 +1,9 @@
 package consoul.actions;
 
-import consoul.actions.Action;
+import consoul.actions.form.FormField;
+import consoul.tools.ListWidget;
 import jcurses.system.InputChar;
-import jdk.internal.util.xml.impl.Input;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 import static jcurses.system.InputChar.KEY_BACKSPACE;

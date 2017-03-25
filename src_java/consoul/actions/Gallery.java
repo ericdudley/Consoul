@@ -1,6 +1,7 @@
 package consoul.actions;
 
-import consoul.actions.Action;
+import consoul.actions.gallery.Image;
+import consoul.tools.ListWidget;
 import jcurses.system.InputChar;
 
 import java.util.List;

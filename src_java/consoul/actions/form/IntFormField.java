@@ -1,4 +1,4 @@
-package consoul.actions;
+package consoul.actions.form;
 
 /**
  * Created by eric on 3/23/17.

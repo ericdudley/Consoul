@@ -1,5 +1,6 @@
-package consoul;
+package consoul.tools;
 
+import consoul.ApplicationManager;
 import jcurses.system.CharColor;
 import jcurses.system.InputChar;
 

@@ -1,8 +1,6 @@
 package consoul.views;
 
 import consoul.actions.Gallery;
-import consoul.actions.Image;
-import consoul.views.View;
 
 import java.awt.Point;
 

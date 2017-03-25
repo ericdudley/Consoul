@@ -1,6 +1,4 @@
-package consoul.actions;
-
-import static consoul.ResourceManager.dates;
+package consoul.actions.form;
 
 /**
  * Created by eric on 3/23/17.
