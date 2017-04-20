@@ -4,6 +4,7 @@ import consoul.actions.Gallery;
 import consoul.actions.gallery.Image;
 
 import java.awt.Point;
+import java.util.List;
 
 /**
  * view for gallery.
@@ -23,6 +24,7 @@ public class GalleryView extends View {
         String str = (gallery.getCurrent() + 1) + " of " + gallery.getImages().size();
         vm.drawString(str, vm.width - 1 - str.length(), vm.height - 1);
         Image curr = gallery.getImages().get(gallery.getCurrent());
+        img_loc.x = vm.width / 2 - curr.getWidth() / 2;
         if (gallery.showingInfo()) {
             vm.drawString(curr.getInfo(), (vm.width / 2) - curr.getInfo().length() / 2, vm.height / 2);
         } else {
@@ -38,7 +40,5 @@ public class GalleryView extends View {
     public void calculateSpacing() {
         gallery = (Gallery) vm.am.getAction();
         img_loc.y = 1;
-        int img_width = gallery.getImages().get(gallery.getCurrent()).getWidth();
-        img_loc.x = (vm.width - img_width) / 2;
     }
 }

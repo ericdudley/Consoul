@@ -13,7 +13,7 @@ import consoul.actions.gallery.Image;
  * @author Eric Dudley
  * @version 3/7/17
  */
-public class Museum extends Consoul {
+public class Example extends Consoul {
 
     @Override
     public Action init(ApplicationManager am) {
@@ -42,6 +42,6 @@ public class Museum extends Consoul {
     }
 
     public static void main(String[] args) {
-        Museum consoul = new Museum();
+        Example consoul = new Example();
     }
 }

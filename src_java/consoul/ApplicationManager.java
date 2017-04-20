@@ -197,8 +197,8 @@ public class ApplicationManager
         public void routeTo(Action target) {
                 Action prev = curr_action;
                 curr_action = target;
-                vm.update();
                 curr_action.preLoad();
+                vm.update();
                 curr_action.execute();
                 vm.preRender();
                 if (prev != null) {
