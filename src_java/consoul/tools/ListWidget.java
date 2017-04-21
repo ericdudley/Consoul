@@ -70,4 +70,9 @@ public class ListWidget<E> {
     public String getSpecial(int index) {
         return specials.get(index - list.size());
     }
+
+    public void removeAll(){
+        current = 0;
+        list = new ArrayList<E>();
+    }
 }

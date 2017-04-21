@@ -46,6 +46,7 @@ public class ViewManager
                 addColor("highlighted_text", CharColor.WHITE, CharColor.BLACK);
                 addColor("bg", CharColor.BLACK, CharColor.BLACK);
                 addColor("error_text", CharColor.RED, CharColor.BLACK);
+                addColor("title_text", CharColor.BLACK, CharColor.YELLOW);
         }
 
         /**
@@ -65,8 +66,14 @@ public class ViewManager
         public void preRender() {
                 color("bg");
                 clearScreen(curr_color);
+                String title = "launch";
+                String sep = " -> ";
+                color("title_text");
+                for(Action a: this.am.title_actions){
+                        title += sep + a.getName();
+                }
+                drawString(title, 0, 0);
         }
-
         /**
          * Used for safely accessing map.
          */

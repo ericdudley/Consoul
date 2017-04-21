@@ -20,6 +20,8 @@ public class MenuView extends View {
 
     @Override
     public void render() {
+        vm.color("title_text");
+        vm.drawString(menu.getName(), leftMargin, topMargin - 1);
         int y = topMargin + 1;
         for (int i = 0; i < menu.getOptions().size(); i++) {
             vm.color("menu_text");
@@ -33,7 +35,7 @@ public class MenuView extends View {
     @Override
     public void calculateSpacing() {
         leftMargin = 5;
-        topMargin = 3;
+        topMargin = 5;
         menu = (Menu) vm.am.getAction();
         numOptions = menu.getOptions().size();
         lineSpacing = vm.height / numOptions >= 3 ? 3 : 2;

@@ -40,6 +40,10 @@ public class Menu extends Action
         list.removeItem(action);
     }
 
+    public void resetOptions()
+    {
+        list.removeAll();
+    }
     /**
      * Getter
      * @return List of actions in menu.

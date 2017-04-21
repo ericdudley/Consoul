@@ -26,6 +26,10 @@ public class Gallery extends Action {
         return list.getList();
     }
 
+    public void deleteImages(){
+        list.removeAll();
+    }
+
     public int getCurrent() {
         return list.getCurrent();
     }

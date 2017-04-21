@@ -4,7 +4,9 @@ import consoul.actions.Action;
 import consoul.tools.InputThread;
 import jcurses.system.InputChar;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import static java.lang.Thread.sleep;
@@ -22,6 +24,7 @@ public class ApplicationManager
         public static final int INVALID_INT = -1;
         public static final int POLLING_DELAY = 100;
 
+        public List<Action> title_actions;
         private Action curr_action;
         public boolean alive;
     private Queue<InputChar> input_queue;
@@ -35,12 +38,13 @@ public class ApplicationManager
          * Constructor. Creates vm.
          */
         public ApplicationManager() {
-                vm = new ViewManager(this);
-                rm = new ResourceManager(this);
+            vm = new ViewManager(this);
+            rm = new ResourceManager(this);
             input_sync = new Object();
             it = new InputThread(this, input_sync);
             input_queue = new LinkedList<>();
-                alive = true;
+            alive = true;
+            title_actions = new ArrayList<>();
         }
 
         /**
@@ -94,9 +98,6 @@ public class ApplicationManager
          * Handles default input.
          */
         public void defaultInputHandler(InputChar inc) {
-                if (!inc.isSpecialCode() && inc.getCharacter() == 'q') {
-                        System.exit(0);
-                }
         }
         /**
          * Returns input from the input_queue without blocking.
@@ -197,9 +198,12 @@ public class ApplicationManager
         public void routeTo(Action target) {
                 Action prev = curr_action;
                 curr_action = target;
+                title_actions.add(target);
+                vm.preRender();
                 curr_action.preLoad();
                 vm.update();
                 curr_action.execute();
+                title_actions.remove(curr_action);
                 vm.preRender();
                 if (prev != null) {
                         prev.reset();
