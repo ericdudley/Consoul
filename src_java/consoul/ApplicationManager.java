@@ -25,6 +25,7 @@ public class ApplicationManager
         public static final int POLLING_DELAY = 100;
 
         public List<Action> title_actions;
+        private String app_name;
         private Action curr_action;
         public boolean alive;
     private Queue<InputChar> input_queue;
@@ -219,4 +220,12 @@ public class ApplicationManager
         public Action getAction() {
                 return this.curr_action;
         }
+
+    public String getAppName() {
+        return app_name;
+    }
+
+    public void setAppName(String app_name) {
+        this.app_name = app_name;
+    }
 }

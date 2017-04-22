@@ -66,7 +66,7 @@ public class ViewManager
         public void preRender() {
                 color("bg");
                 clearScreen(curr_color);
-                String title = "launch";
+                String title = am.getAppName();
                 String sep = " -> ";
                 color("title_text");
                 for(Action a: this.am.title_actions){

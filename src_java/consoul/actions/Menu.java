@@ -83,6 +83,8 @@ public class Menu extends Action
                 list.prev();
             else if (code == KEY_DOWN)
                 list.next();
+            else if (code == KEY_BACKSPACE)
+                return;
             else if (code == 10) {
                 choose(getCurrent());
                 if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back"))
