@@ -19,7 +19,7 @@ public class Example extends Consoul {
     public Action init(ApplicationManager am) {
         Menu menu = (Menu) am.addAction("consoul.actions.Menu", "consoul.views.MenuView");
         menu.setName("Main Menu");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 100; i++) {
             Menu newmenu = (Menu) am.addAction("consoul.actions.Menu", "consoul.views.MenuView");
             newmenu.setName("menu option " + i);
             menu.addOption(newmenu);

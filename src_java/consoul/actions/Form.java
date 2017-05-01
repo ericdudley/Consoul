@@ -15,6 +15,15 @@ public class Form extends Action {
         return list.getList();
     }
 
+    public Map<String, FormField> getMap() {
+        List<FormField> ffs = list.getList();
+        Map<String, FormField> map = new HashMap<>();
+        for(FormField f: ffs){
+            map.put(f.getName(), f);
+        }
+        return map;
+    }
+
     public List<String> getSpecials() {
         return list.getSpecials();
     }
@@ -44,6 +53,10 @@ public class Form extends Action {
 
     public int numFields() {
         return list.size();
+    }
+
+    public void resetFields(){
+        list.removeAll();
     }
 
     public void addField(String name) {
@@ -84,8 +97,10 @@ public class Form extends Action {
                 if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back")) {
                     return;
                 } else if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Save")) {
-                    if (validate())
+                    if (validate()) {
                         save();
+                        break;
+                    }
                 }
             } else if (!code.isSpecialCode()) {
                 addToField(getCurrent(), code.getCharacter());

@@ -17,9 +17,9 @@ public class ResourceManager {
             for (int month = 1; month <= 12; month++) {
                 for (int day = 1; day <= daysInMonth(year, month); day++) {
                     StringBuilder date = new StringBuilder();
-                    date.append(String.format("%04d", year) + "/");
                     date.append(String.format("%02d", month) + "/");
-                    date.append(String.format("%02d", day));
+                    date.append(String.format("%02d", day) + "/");
+                    date.append(String.format("%04d", year));
                     dates.add(date.toString());
                 }
             }

@@ -108,8 +108,9 @@ public class ViewManager
          */
         public void update() {
                 Action action = am.getAction();
-                if (curr_view == null || !curr_view.getClass().toString().equals(getView(action)))
+                if (curr_view == null || !curr_view.getClass().toString().equals("class "+getView(action))) {
                         changeView();
+                }
                 width = Toolkit.getScreenWidth();
                 height = Toolkit.getScreenHeight();
                 preRender();

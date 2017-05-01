@@ -13,4 +13,9 @@ public class IntFormField extends FormField {
     public boolean validate() {
         return this.getValue().matches("^-?\\d+$");
     }
+
+    public int getInt()
+    {
+        return Integer.parseInt(this.getValue());
+    }
 }
