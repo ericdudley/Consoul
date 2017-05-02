@@ -47,6 +47,7 @@ public class ViewManager
                 addColor("bg", CharColor.BLACK, CharColor.BLACK);
                 addColor("error_text", CharColor.RED, CharColor.BLACK);
                 addColor("title_text", CharColor.BLACK, CharColor.YELLOW);
+                addColor("green_text", CharColor.GREEN, CharColor.GREEN);
         }
 
         /**

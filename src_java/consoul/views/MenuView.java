@@ -4,6 +4,8 @@ import consoul.ViewManager;
 import consoul.actions.Action;
 import consoul.actions.Menu;
 
+import static java.lang.Integer.min;
+
 /**
  * View for Menu action.
  *
@@ -48,7 +50,7 @@ public class MenuView extends View {
             y += lineSpacing;
         }
         vm.color("highlighted_text");
-        vm.drawString(""+curr_end, leftMargin, y-1);
+        vm.drawString(""+min(curr_end, numOptions), leftMargin, y-1);
     }
 
     @Override

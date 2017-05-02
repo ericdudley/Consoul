@@ -31,7 +31,7 @@ public class Form extends Action {
         return list.getCurrent();
     }
 
-    private ListWidget<FormField> list;
+    protected ListWidget<FormField> list;
 
     public Form() {
         list = new ListWidget<FormField>() {
@@ -66,14 +66,14 @@ public class Form extends Action {
     public void addField(FormField f) {
         list.addItem(f);
     }
-    private void addToField(int index, char ch) {
+    protected void addToField(int index, char ch) {
         if (list.isSpecial(index))
             return;
         FormField field = list.getList().get(index);
         field.setValue(field.getValue() + ch);
     }
 
-    private void removeFromField(int index) {
+    protected void removeFromField(int index) {
         if (list.isSpecial(index))
             return;
         FormField field = list.getList().get(index);

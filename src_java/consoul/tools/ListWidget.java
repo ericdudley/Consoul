@@ -67,6 +67,14 @@ public class ListWidget<E> {
         specials.add(special);
     }
 
+    public void removeSpecial(String special){
+        for(int i = specials.size()-1; i>=0; i--){
+            if(specials.get(i).equals(special)){
+                specials.remove(specials.get(i));
+            }
+        }
+    }
+
     public String getSpecial(int index) {
         return specials.get(index - list.size());
     }

@@ -32,6 +32,13 @@ public class Example extends Consoul {
         form.addField(new TimeFormField("Time"));
         menu.addOption(form);
 
+        BarGraph bg = (BarGraph)am.addAction("consoul.actions.BarGraph", "consoul.views.BarGraphView");
+        bg.addVal("Test", 10);
+        bg.addVal("HEllo", 3);
+        bg.addVal("name", 5);
+        bg.setName("Bar Graph");
+        menu.addOption(bg);
+
         Gallery gallery = (Gallery) am.addAction("consoul.actions.Gallery", "consoul.views.GalleryView");
         gallery.setName("Gallery");
         gallery.addImage(new Image("aaabbbcccdddeee", 3));
