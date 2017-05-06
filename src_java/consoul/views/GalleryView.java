@@ -30,6 +30,7 @@ public class GalleryView extends View {
         if(gallery.getImages().size() > 0) {
             Image curr = gallery.getImages().get(gallery.getCurrent());
             img_loc.x = vm.width / 2 - curr.getWidth() / 2;
+            img_loc.y = vm.height / 2 - curr.getHeight() / 2;
             if (gallery.showingInfo()) {
                 vm.drawString(curr.getInfo(), (vm.width / 2) - curr.getInfo().length() / 2, vm.height / 2);
             } else {

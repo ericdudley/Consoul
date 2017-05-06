@@ -27,6 +27,11 @@ public class BarGraph extends Action{
         vals.put(name, val);
     }
 
+    public void resetVals()
+    {
+        this.vals = new HashMap<>();
+    }
+
 
     @Override
     public void execute() {

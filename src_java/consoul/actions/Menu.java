@@ -2,7 +2,10 @@ package consoul.actions;
 
 import consoul.tools.ListWidget;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static java.lang.Thread.sleep;
 import static jcurses.system.InputChar.*;
@@ -16,10 +19,17 @@ import static jcurses.system.InputChar.*;
 public class Menu extends Action
 {
     private ListWidget<Action> list;
+    private Set<Action> leaveon;
 
     public Menu() {
         list = new ListWidget<>();
+        leaveon = new HashSet<>();
         list.addSpecial("Back");
+    }
+
+    public void leaveOn(Action a)
+    {
+        leaveon.add(a);
     }
 
     /**
@@ -87,7 +97,8 @@ public class Menu extends Action
                 return;
             else if (code == 10) {
                 choose(getCurrent());
-                if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back"))
+                if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back") ||
+                        leaveon.contains(list.getList().get(list.getCurrent())))
                     return;
             }
         }

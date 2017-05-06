@@ -96,7 +96,8 @@ public class Form extends Action {
             else if (code.getCode() == 10) {
                 if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Back")) {
                     return;
-                } else if (list.isSpecial(getCurrent()) && list.getSpecial(getCurrent()).equals("Save")) {
+                } else if (list.isSpecial(getCurrent()) && (list.getSpecial(getCurrent()).equals("Save") ||
+                        list.getSpecial(getCurrent()).equals("Search"))) {
                     if (validate()) {
                         save();
                         break;

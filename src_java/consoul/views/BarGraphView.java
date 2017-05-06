@@ -33,13 +33,15 @@ public class BarGraphView extends View {
             float ratio = (float)size / max;
             StringBuilder sb = new StringBuilder(vm.width);
             for(int i=0; i<ratio*vm.width*0.9; i++){
-                sb.append((char)219);
+                sb.append("*");
             }
             vm.color("title_text");
-            vm.drawString(s, fieldsPos.x, y);
+            vm.drawString(s+"["+size+"]", fieldsPos.x, y);
             vm.color("green_text");
             vm.drawString(sb.toString(), fieldsPos.x, y+1);
             y+=fieldSpacing;
+            vm.color("menu_text");
+            vm.drawString("backspace to quit", 0, vm.height - 1);
         }
     }
 
